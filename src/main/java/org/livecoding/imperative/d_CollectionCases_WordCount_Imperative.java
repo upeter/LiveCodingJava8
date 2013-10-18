@@ -7,12 +7,14 @@ import static org.junit.Assert.assertEquals;
 
 public class d_CollectionCases_WordCount_Imperative {
 
+    static final  List<String> tweets = Arrays.asList("JFall rocks!", "Java8 is almost there");
 
     public static void main(String[] args) {
-        List<String> lines = Arrays.asList("JFall rocks!", "Java8 is almost there");
+
         int lengthLongestWord = 0;
-        for (String line : lines) {
-            for (String word : line.split(" ")) {
+
+        for (String tweet : tweets) {
+            for (String word : tweet.split(" ")) {
                 if (word.length() > lengthLongestWord) {
                     lengthLongestWord = word.length();
                 }

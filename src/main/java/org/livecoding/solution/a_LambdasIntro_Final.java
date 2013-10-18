@@ -37,8 +37,13 @@ public class a_LambdasIntro_Final {
             return fi.isDirectory();
         });
 
+
+        //Method references:
         //Method reference show ! not working
         f.listFiles(File::isDirectory);
+
+        //static method reference needed for isFile
+        f.listFiles(FilePropertiesUtil::isFile);
 
         //assign to interface
         FileFilter ff = (File fi) -> fi.isDirectory();
@@ -48,6 +53,16 @@ public class a_LambdasIntro_Final {
         f.listFiles(ff);
     }
 
+
+    static class FilePropertiesUtil {
+        public static boolean isDirectory(File f) {
+            return f.isDirectory();
+        }
+
+        public static boolean isFile(File f){
+            return f.isFile();
+        }
+    }
 
     private static void functionalWithoutDuplication() {
         File file = new File("/tmp");

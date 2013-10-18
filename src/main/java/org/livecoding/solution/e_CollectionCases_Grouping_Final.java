@@ -1,12 +1,13 @@
 package org.livecoding.solution;
 
-import static org.livecoding.domain.Person.Role.*;
 import org.livecoding.domain.Person;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
+import static org.livecoding.domain.Person.Role.PROGRAMMER;
+import static org.livecoding.domain.Person.Role.TESTER;
 
 public class e_CollectionCases_Grouping_Final {
 
@@ -29,7 +30,6 @@ public class e_CollectionCases_Grouping_Final {
 
 
     public static void main(String[] args) {
-        countLongestWordFunctional();
         computeProgrammersPerAgeGroupFunctional();
 
     }
@@ -40,17 +40,10 @@ public class e_CollectionCases_Grouping_Final {
                 .sorted(Comparator.comparing((Person p) -> p.getName()))
                 .collect(Collectors.groupingBy(p -> p.getAge() / 10 * 10));
         assertEquals(expected, result);
+
+        System.out.println(result.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().size())));
+
     }
 
-    private static void countLongestWordFunctional() {
-        List<String> lines = Arrays.asList("JFall rocks!", "Java8 is almost there");
 
-        int lengthLongestWord = lines.stream()
-                .map(line -> Arrays.asList(line.split(" ")).stream()
-                        .map(String::length)
-                        .reduce(Math::max).orElse(0))
-                .reduce(Math::max).orElse(0);
-
-        assertEquals("almost".length(), lengthLongestWord);
-    }
 }

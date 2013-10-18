@@ -10,7 +10,6 @@ public class g_VirtualExtensionMethods {
     }
 }
 
-
 class MyService {
     public static final Logger LOG = LoggerFactory.getLogger(MyService.class);
 
@@ -18,5 +17,9 @@ class MyService {
         LOG.info("Hey I am {}", "processing!");
     }
 }
+
+
+
+
 
 

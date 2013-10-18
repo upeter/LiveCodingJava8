@@ -48,3 +48,18 @@ class MyService2 implements Slf4JLogger {
         info("Hey I'm {}", "processing!");
     }
 }
+
+interface HandyComparator<T> extends Comparable<T> {
+
+    int compareTo(T o);
+
+    default public boolean lt(T that) {
+        return  this.compareTo(that) < 0;
+    }
+
+    default public boolean gt(T that) {
+        return  this.compareTo(that) > 0;
+    }
+
+    //etc.
+}

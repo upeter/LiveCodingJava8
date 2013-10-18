@@ -1,11 +1,11 @@
 package org.livecoding.solution;
 
 import java.util.*;
-import java.util.Comparator;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * file:///Users/urs/Documents/jdk-8-ea-docs-b99-all-17_jul_2013/docs/api/index.html?java/util/Collection.html
@@ -48,12 +48,16 @@ public class c_Collections_Final {
         //.max(Integer::compare);
         //.max(Math::max);
         //.collect(Collectors.maxBy(Math::max));
-        assertEquals(4, (int) res2.get());
+        assertSame(4, res2.get());
+        assertTrue(res2.isPresent());
+        assertSame(4, res2.orElse(0));
 
         //orElse
         int res3 = new ArrayList<Integer>().stream()
                 .max(Comparator.comparing((Integer i) -> i))
                 .orElse(0);
+
+
         assertEquals(0, res3);
 
         //reduce, peek
@@ -64,5 +68,11 @@ public class c_Collections_Final {
                 .reduce(Math::addExact);
         System.out.println("res is " + r.get());
         //.reduce((i, j) -> i + j);
+
+
+        //groupBy
+        Map<Integer, List<Integer>> mapRes = Arrays.asList(1, 2, 3, 4).stream()
+                .collect(Collectors.groupingBy(i -> i % 2));
+        System.out.println(mapRes);
     }
 }
