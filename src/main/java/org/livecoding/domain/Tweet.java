@@ -2,7 +2,6 @@ package org.livecoding.domain;
 
 public class Tweet {
     private final String message;
-    private boolean retweet;
     public Tweet(String message) {
         this.message = message;
     }
@@ -12,6 +11,16 @@ public class Tweet {
     }
 
     public boolean isRetweet() {
-        return true;
+        return message.length() % 2 == 0;
     }
+
+    @Override
+    public String toString() {
+        return "Tweet{" +
+                "message='" + message + '\'' +
+                ", retweet=" + isRetweet() +
+                '}';
+    }
+
+
 }

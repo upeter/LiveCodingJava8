@@ -11,53 +11,37 @@ import org.livecoding.domain.Tweet;
 
 public class f_UseYourOwnFunctions_Imperative {
 
-    public static void main(String[] args) {
-        String url = "http://twitter/search/tweets...";
-
-       List<Tweet> collected = new Java8TweetFilter().filterTweets(url);
-        System.out.println(collected);
-    }
-
     abstract static class StreamingTweetFilterTemplate {
 
         public List<Tweet> filterTweets(String searchQuery) {
             List<Tweet> collected = new ArrayList<>();
-            BufferedReader br = null;
-            try {
-                //do some OAuth...
-                //read from stream
-                br = new BufferedReader(new InputStreamReader(new URL(searchQuery).openStream()));
-                String line = "";
-                while (line != null) {
-                    line = br.readLine();
-                    Tweet tweet = parseTweet(line);
-
-                    //do something specific with the tweet in doProcessTweet(...)
-                    if(doFilterTweet(tweet)) {
+            //do some OAuth...
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(searchQuery).openStream()))) {
+                String json = "";
+                while ((json = br.readLine())!= null) {
+                    Tweet tweet = new Tweet(json);
+                    //filter tweets
+                    if (doFilterTweet(tweet)) {
                         collected.add(tweet);
                     }
                 }
             } catch (IOException e) {
-                IOUtils.closeQuietly(br);
                 throw new RuntimeException(e);
-            } finally {
-                IOUtils.closeQuietly(br);
             }
             return collected;
         }
 
         abstract boolean doFilterTweet(Tweet tweet);
 
-        protected static Tweet parseTweet(String line) {
-            return new Tweet(line);
-        }
     }
 
 
     static class Java8TweetFilter extends StreamingTweetFilterTemplate {
+        public static final String JAVA_8_REGEXP = ".*[Jj][Aa][Vv][Aa][\\s]?8.*";
+
         @Override
         protected boolean doFilterTweet(Tweet tweet) {
-            return tweet.getMessage().matches("(Java8|Java 8|java 8|java8)");
+            return tweet.getMessage().matches(JAVA_8_REGEXP);
         }
     }
 
@@ -67,5 +51,13 @@ public class f_UseYourOwnFunctions_Imperative {
             return !tweet.isRetweet();
         }
     }
+
+
+    public static void main(String[] args) {
+        String url = StreamingTweetFilterTemplate.class.getResource("/tweets.csv").toExternalForm();
+        List<Tweet> collected = new Java8TweetFilter().filterTweets(url);
+        System.out.println(collected);
+    }
+
 
 }

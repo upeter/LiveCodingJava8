@@ -17,9 +17,10 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class f_UseYourOwnFunctions {
+    public static final String JAVA_8_REGEXP = ".*[Jj][Aa][Vv][Aa][\\s]?8.*";
 
     public static void main(String[] args) {
-        String url = "http://twitter/search/tweets...";
+        String url = StreamingTweetFilter.class.getResource("/tweets.csv").toExternalForm();
         //replace with predicate lambda
 
         //replace with predicate method reference
@@ -32,44 +33,35 @@ public class f_UseYourOwnFunctions {
 
         public List<Tweet> filterTweets(String searchQuery) {
             List<Tweet> collected = new ArrayList<>();
-            BufferedReader br = null;
-            try {
-                //do some OAuth...
-                //read from stream
-                br = new BufferedReader(new InputStreamReader(new URL(searchQuery).openStream()));
-                String line = "";
-                while (line != null) {
-                    line = br.readLine();
-                    Tweet tweet = parseTweet(line);
-                    //do something specific with the tweet in doProcessTweet(...)
-                    if(doFilterTweet(tweet)) {
+            //do some OAuth...
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(searchQuery).openStream()))) {
+                String json = "";
+                while ((json = br.readLine())!= null) {
+                    Tweet tweet = new Tweet(json);
+                    //do something specific with the tweet in doFilterTweet(...)
+                    if (doFilterTweet(tweet)) {
                         collected.add(tweet);
                     }
                 }
             } catch (IOException e) {
-                IOUtils.closeQuietly(br);
                 throw new RuntimeException(e);
-            } finally {
-                IOUtils.closeQuietly(br);
             }
             return collected;
         }
 
+
         abstract boolean doFilterTweet(Tweet tweet);
 
-        protected static Tweet parseTweet(String line) {
-            return new Tweet(line);
-        }
     }
 
 
-    static class Java8TweetFilter extends StreamingTweetFilter {
-        @Override
-        protected boolean doFilterTweet(Tweet tweet) {
-            return tweet.getMessage().matches("(Java8|Java 8|java 8|java8)");
+    static class Java8TweetCollector {
+
+        protected static boolean doProcessTweet(Tweet tweet) {
+            return tweet.getMessage().matches(JAVA_8_REGEXP);
+
         }
     }
-
 
 
 

@@ -50,7 +50,7 @@ public class d_CollectionCases_WordCount_Final {
                         .map(String::length)
                         .reduce(Math::max).orElse(0))
                 .reduce(Math::max).orElse(0);
-        assertEquals("99999999".length(), lengthLongestWord);
+
         long elapsed = System.currentTimeMillis() - current;
         System.out.println("Elapsed " + elapsed);
     }
