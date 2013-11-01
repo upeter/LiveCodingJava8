@@ -19,4 +19,50 @@ public class d_CollectionCases_WordCount {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static List<String> getManyLines() {
+        List<String> lines  = new ArrayList<>();
+        for (int i = 0; i < 20000000; i++) {
+            lines.add("JFall rocks " + new Integer(i).toString() + " times!");
+        }
+        return lines;
+    }
+
+
+
 }

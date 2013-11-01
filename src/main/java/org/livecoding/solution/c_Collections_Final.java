@@ -2,7 +2,6 @@ package org.livecoding.solution;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -44,10 +43,11 @@ public class c_Collections_Final {
 
         //max, Optional
         Optional<Integer> res2 = Arrays.asList(1, 2, 3, 4).stream()
-                .max(Comparator.comparing((Integer i) -> i));
+               // .max(Comparator.comparing((Integer i) -> i));
         //.max(Integer::compare);
-        //.max(Math::max);
+        .max(Comparator.<Integer>naturalOrder() );
         //.collect(Collectors.maxBy(Math::max));
+
         assertSame(4, res2.get());
         assertTrue(res2.isPresent());
         assertSame(4, res2.orElse(0));
@@ -73,6 +73,11 @@ public class c_Collections_Final {
         //groupBy
         Map<Integer, List<Integer>> mapRes = Arrays.asList(1, 2, 3, 4).stream()
                 .collect(Collectors.groupingBy(i -> i % 2));
-        System.out.println(mapRes);
+
+        Map<Integer, List<Integer>> gb1 = Arrays.asList(1, 2, 3, 4, 7, 9, 11).stream()
+                .collect(Collectors.groupingBy((Integer i) -> i % 2));
+
+        Map<Integer, Integer> gb2 = gb1.entrySet().stream()
+                .collect(Collectors.toMap(k -> k.getKey(), v -> v.getValue().size()));
     }
 }

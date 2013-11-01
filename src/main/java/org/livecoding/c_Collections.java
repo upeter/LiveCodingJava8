@@ -15,14 +15,10 @@ import static org.junit.Assert.*;
 public class c_Collections {
 
     public static void main(String[] args) {
-
-        //show API
-        //bulk operations: (mutate collections with functions)
-        //-> removeIf
-        //streams: collection transformations
-
         //Collections samples:
         //foreach
+
+        //streams: collection transformations
 
         //filter, collect
 
@@ -30,6 +26,6 @@ public class c_Collections {
 
         //max, Optional (orElse, isPresent, get())
 
-        //reduce, peek
+        //groupBy
     }
 }

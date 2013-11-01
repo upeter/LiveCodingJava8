@@ -21,12 +21,6 @@ public class f_UseYourOwnFunctions {
 
     public static void main(String[] args) {
         String url = StreamingTweetFilter.class.getResource("/tweets.csv").toExternalForm();
-        //replace with predicate lambda
-
-        //replace with predicate method reference
-
-        //combine predicates
-
     }
 
     abstract static class StreamingTweetFilter {
