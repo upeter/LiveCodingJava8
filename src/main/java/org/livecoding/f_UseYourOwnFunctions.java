@@ -49,9 +49,9 @@ public class f_UseYourOwnFunctions {
     }
 
 
-    static class Java8TweetCollector {
+    static class Java8TweetFilter {
 
-        protected static boolean doProcessTweet(Tweet tweet) {
+        protected static boolean doFilterTweet(Tweet tweet) {
             return tweet.getMessage().matches(JAVA_8_REGEXP);
 
         }
