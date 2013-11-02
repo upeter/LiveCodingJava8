@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 /**
  * file:///Users/urs/Documents/jdk-8-ea-docs-b99-all-17_jul_2013/docs/api/index.html?java/util/Collection.html
  * file:///Users/urs/Documents/jdk-8-ea-docs-b99-all-17_jul_2013/docs/api/index.html?java/util/stream/Stream.html
- file:///Users/urs/Documents/jdk-8-ea-docs-b99-all-17_jul_2013/docs/api/index.html?java/util/stream/Collectors.html
+ * file:///Users/urs/Documents/jdk-8-ea-docs-b99-all-17_jul_2013/docs/api/index.html?java/util/stream/Collectors.html
  */
 public class c_Collections {
 
@@ -18,13 +18,9 @@ public class c_Collections {
         //Collections samples:
         //foreach
 
-        //streams: collection transformations
+        //filter
 
-        //filter, collect
-
-        //filter, map
-
-        //max, Optional (orElse, isPresent, get())
+        //max
 
         //groupBy
     }
