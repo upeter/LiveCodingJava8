@@ -17,7 +17,6 @@ public class f_UseYourOwnFunctions_Final {
     static class StreamingTweetFilter {
 
         public static List<Tweet> processTweets(String searchQuery, Predicate<Tweet> doFilterTweet) {
-            //do some OAuth...
             try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(searchQuery).openStream()))) {
                 return br.lines()
                         .parallel()

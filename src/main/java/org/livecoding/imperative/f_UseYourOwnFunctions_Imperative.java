@@ -14,7 +14,6 @@ public class f_UseYourOwnFunctions_Imperative {
 
         public List<Tweet> filterTweets(String searchQuery) {
             List<Tweet> collected = new ArrayList<>();
-            //do some OAuth...
             try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(searchQuery).openStream()))) {
                 String json = "";
                 while ((json = br.readLine()) != null) {
