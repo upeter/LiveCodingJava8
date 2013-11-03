@@ -4,6 +4,11 @@ public class Tweet {
     private final String message;
     public Tweet(String message) {
         this.message = message;
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException e) {
+            //do nothing
+        }
     }
 
     public String getMessage() {

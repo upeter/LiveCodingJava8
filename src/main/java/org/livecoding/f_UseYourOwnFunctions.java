@@ -1,6 +1,5 @@
 package org.livecoding;
 
-import org.apache.commons.io.IOUtils;
 import org.livecoding.domain.Tweet;
 
 import java.io.BufferedReader;
@@ -9,12 +8,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.BiPredicate;
-import java.util.function.Predicate;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+import java.util.function.*;
 
 public class f_UseYourOwnFunctions {
     public static final String JAVA_8_REGEXP = ".*[Jj][Aa][Vv][Aa][\\s]?8.*";
@@ -57,6 +51,38 @@ public class f_UseYourOwnFunctions {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static <T> T measure(Supplier<T> code) {
+        long current = System.currentTimeMillis();
+        T result = code.get();
+        long elapsed = System.currentTimeMillis() - current;
+        System.out.println(elapsed);
+        return result;
+    }
 
 
 }

@@ -1,11 +1,10 @@
 package org.livecoding.imperative;
 
-import org.apache.commons.io.IOUtils;
-
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import org.livecoding.domain.Tweet;
 
@@ -18,7 +17,7 @@ public class f_UseYourOwnFunctions_Imperative {
             //do some OAuth...
             try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(searchQuery).openStream()))) {
                 String json = "";
-                while ((json = br.readLine())!= null) {
+                while ((json = br.readLine()) != null) {
                     Tweet tweet = new Tweet(json);
                     //filter tweets
                     if (doFilterTweet(tweet)) {
@@ -57,6 +56,44 @@ public class f_UseYourOwnFunctions_Imperative {
         String url = StreamingTweetFilterTemplate.class.getResource("/tweets.csv").toExternalForm();
         List<Tweet> collected = new Java8TweetFilter().filterTweets(url);
         System.out.println(collected);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //   List<Tweet> collected = measure(() -> new Java8TweetFilter().filterTweets(url));
+
+    public static <T> T measure(Supplier<T> code) {
+        long current = System.currentTimeMillis();
+        T result = code.get();
+        long elapsed = System.currentTimeMillis() - current;
+        System.out.println(elapsed);
+        return result;
     }
 
 

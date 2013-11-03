@@ -1,6 +1,5 @@
 package org.livecoding.solution;
 
-import org.apache.commons.io.IOUtils;
 import org.livecoding.domain.Tweet;
 
 import java.io.BufferedReader;
@@ -9,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class f_UseYourOwnFunctions_Final {
@@ -18,8 +18,9 @@ public class f_UseYourOwnFunctions_Final {
 
         public static List<Tweet> processTweets(String searchQuery, Predicate<Tweet> doFilterTweet) {
             //do some OAuth...
-            try(BufferedReader br = new BufferedReader(new InputStreamReader(new URL(searchQuery).openStream()))) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(searchQuery).openStream()))) {
                 return br.lines()
+                        .parallel()
                         .map(Tweet::new)
                         .filter(doFilterTweet)
                         .collect(Collectors.toList());
@@ -41,7 +42,8 @@ public class f_UseYourOwnFunctions_Final {
 
     public static void main(String[] args) {
 
-        String url = StreamingTweetFilter.class.getResource("/tweets.csv").toExternalForm();
+        String url = StreamingTweetFilter.class.getResource("/many_tweets.csv").toExternalForm();
+        measure(() -> StreamingTweetFilter.processTweets(url, Java8TweetCollector::doProcessTweet));
         //
         List<Tweet> collected = StreamingTweetFilter.processTweets(url, (Tweet tweet) ->
                 tweet.getMessage().matches(JAVA_8_REGEXP)
@@ -50,13 +52,14 @@ public class f_UseYourOwnFunctions_Final {
         System.out.println(collected);
         StreamingTweetFilter.processTweets(url, Java8TweetCollector::doProcessTweet);
 
-        Predicate<Tweet> java8Tweets = tweet -> tweet.getMessage().matches(JAVA_8_REGEXP);
-        Predicate<Tweet> originalTweets =  tweet -> tweet.isRetweet();
+        Predicate<Tweet> java8Tweets = Java8TweetCollector::doProcessTweet;
+        Predicate<Tweet> retweets = Tweet::isRetweet;
 
-        Predicate< Tweet > originalJava8Tweets =  java8Tweets.and(originalTweets);
+        Predicate<Tweet> originalJava8Tweets = java8Tweets.and(retweets.negate());
 
         collected = StreamingTweetFilter.processTweets(url, originalJava8Tweets);
         System.out.println(collected);
+
         //Benefits:
         //Decoupling processing logic from processor -> more reuse, better testable
         //no abuse of inheritance
@@ -64,5 +67,12 @@ public class f_UseYourOwnFunctions_Final {
 
     }
 
+    public static <T> T measure(Supplier<T> code) {
+        long current = System.currentTimeMillis();
+        T result = code.get();
+        long elapsed = System.currentTimeMillis() - current;
+        System.out.println(elapsed);
+        return result;
+    }
 
 }
