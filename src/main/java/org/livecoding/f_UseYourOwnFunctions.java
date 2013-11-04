@@ -14,7 +14,7 @@ public class f_UseYourOwnFunctions {
     public static final String JAVA_8_REGEXP = ".*[Jj][Aa][Vv][Aa][\\s]?8.*";
 
     public static void main(String[] args) {
-        String url = StreamingTweetFilter.class.getResource("/tweets.csv").toExternalForm();
+        String url = StreamingTweetFilter.class.getResource("/tweets.json").toExternalForm();
     }
 
     abstract static class StreamingTweetFilter {

@@ -52,7 +52,7 @@ public class f_UseYourOwnFunctions_Imperative {
 
 
     public static void main(String[] args) {
-        String url = StreamingTweetFilterTemplate.class.getResource("/tweets.csv").toExternalForm();
+        String url = StreamingTweetFilterTemplate.class.getResource("/tweets.json").toExternalForm();
         List<Tweet> collected = new Java8TweetFilter().filterTweets(url);
         System.out.println(collected);
     }

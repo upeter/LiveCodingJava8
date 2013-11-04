@@ -41,7 +41,7 @@ public class f_UseYourOwnFunctions_Final {
 
     public static void main(String[] args) {
 
-        String url = StreamingTweetFilter.class.getResource("/many_tweets.csv").toExternalForm();
+        String url = StreamingTweetFilter.class.getResource("/many_tweets.json").toExternalForm();
         measure(() -> StreamingTweetFilter.processTweets(url, Java8TweetCollector::doProcessTweet));
         //
         List<Tweet> collected = StreamingTweetFilter.processTweets(url, (Tweet tweet) ->
