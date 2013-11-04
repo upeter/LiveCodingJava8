@@ -53,7 +53,7 @@ public class f_UseYourOwnFunctions_Imperative {
 
     public static void main(String[] args) {
         String url = StreamingTweetFilterTemplate.class.getResource("/tweets.json").toExternalForm();
-        List<Tweet> collected = new Java8TweetFilter().filterTweets(url);
+        List<Tweet> collected = measure(() -> new Java8TweetFilter().filterTweets(url));
         System.out.println(collected);
     }
 
@@ -73,25 +73,10 @@ public class f_UseYourOwnFunctions_Imperative {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    //   List<Tweet> collected = measure(() -> new Java8TweetFilter().filterTweets(url));
-
     public static <T> T measure(Supplier<T> code) {
         long current = System.currentTimeMillis();
         T result = code.get();
-        long elapsed = System.currentTimeMillis() - current;
-        System.out.println(elapsed);
+        System.out.printf("Time elapsed: %s ms\n", (System.currentTimeMillis() - current));
         return result;
     }
 

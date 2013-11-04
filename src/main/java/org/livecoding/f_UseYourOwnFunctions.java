@@ -78,8 +78,7 @@ public class f_UseYourOwnFunctions {
     public static <T> T measure(Supplier<T> code) {
         long current = System.currentTimeMillis();
         T result = code.get();
-        long elapsed = System.currentTimeMillis() - current;
-        System.out.println(elapsed);
+        System.out.printf("Time elapsed: %s ms\n", (System.currentTimeMillis() - current));
         return result;
     }
 
