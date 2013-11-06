@@ -53,8 +53,9 @@ public class f_UseYourOwnFunctions_Imperative {
 
     public static void main(String[] args) {
         String url = StreamingTweetFilterTemplate.class.getResource("/tweets.json").toExternalForm();
-        List<Tweet> collected = measure(() -> new Java8TweetFilter().filterTweets(url));
-        System.out.println(collected);
+        long current = System.currentTimeMillis();
+        List<Tweet> collected = new Java8TweetFilter().filterTweets(url);
+        System.out.printf("Time elapsed: %s ms\n", (System.currentTimeMillis() - current));
     }
 
 
