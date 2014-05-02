@@ -5,7 +5,10 @@ import org.livecoding.domain.Tweet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -27,6 +30,19 @@ public class f_UseYourOwnFunctions_Final {
                 throw new RuntimeException(e);
             }
         }
+
+        public static List<Tweet> filterTweets2(String searchQuery, Predicate<Tweet> tweetFilter) {
+            try {
+                return Files.lines(Paths.get(new URI(searchQuery)))
+                        .parallel()
+                        .map(Tweet::new)
+                        .filter(tweetFilter)
+                        .collect(Collectors.toList());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
     }
 
 
@@ -69,8 +85,7 @@ public class f_UseYourOwnFunctions_Final {
     public static <T> T measure(Supplier<T> code) {
         long current = System.currentTimeMillis();
         T result = code.get();
-        long elapsed = System.currentTimeMillis() - current;
-        System.out.println(elapsed);
+        System.out.printf("Time elapsed: %s ms\n", (System.currentTimeMillis() - current));
         return result;
     }
 

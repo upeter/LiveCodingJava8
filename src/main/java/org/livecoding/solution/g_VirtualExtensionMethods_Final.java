@@ -12,6 +12,8 @@ public class g_VirtualExtensionMethods_Final {
 
 interface Slf4JLogger {
 
+
+
     default Logger logger() {
         return LoggerFactory.getLogger(getClass());
     }

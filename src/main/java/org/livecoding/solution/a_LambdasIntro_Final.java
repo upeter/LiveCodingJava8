@@ -26,6 +26,8 @@ public class a_LambdasIntro_Final {
                 return pathname.isDirectory();
             }
         });
+
+        Predicate<File> p = (File fi) -> fi.isDirectory();
         //print(res);
         //without inference
         f.listFiles((File fi) -> fi.isDirectory());
