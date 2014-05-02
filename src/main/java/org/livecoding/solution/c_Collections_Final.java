@@ -2,6 +2,8 @@ package org.livecoding.solution;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -9,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * file:///Users/urs/Documents/jdk-8-ea-docs-b99-all-17_jul_2013/docs/api/index.html?java/util/Collection.html
  * file:///Users/urs/Documents/jdk-8-ea-docs-b99-all-17_jul_2013/docs/api/index.html?java/util/stream/Stream.html
- file:///Users/urs/Documents/jdk-8-ea-docs-b99-all-17_jul_2013/docs/api/index.html?java/util/stream/Collectors.html
+ * file:///Users/urs/Documents/jdk-8-ea-docs-b99-all-17_jul_2013/docs/api/index.html?java/util/stream/Collectors.html
  */
 public class c_Collections_Final {
 
@@ -32,6 +34,12 @@ public class c_Collections_Final {
 
         assertEquals(Arrays.asList(2, 4), res0);
 
+        //filter, collect
+        List<Integer> res0b = IntStream.of(4, 3, 2, 1).filter(i -> i % 2 == 0)
+                .sorted()
+                .boxed()
+                .collect(Collectors.toList());
+
         //filter, map
         //show error messages: Integer::toString -> is ambigous
         List<String> res1 = Arrays.asList(1, 2, 3, 4).stream()
@@ -43,9 +51,9 @@ public class c_Collections_Final {
 
         //max, Optional
         Optional<Integer> res2 = Arrays.asList(1, 2, 3, 4).stream()
-               // .max(Comparator.comparing((Integer i) -> i));
-        //.max(Integer::compare);
-        .max(Comparator.<Integer>naturalOrder() );
+                // .max(Comparator.comparing((Integer i) -> i));
+                //.max(Integer::compare);
+                .max(Comparator.<Integer>naturalOrder());
         //.collect(Collectors.maxBy(Math::max));
 
         assertSame(4, res2.get());
