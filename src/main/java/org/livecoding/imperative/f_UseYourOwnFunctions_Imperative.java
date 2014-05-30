@@ -34,6 +34,13 @@ public class f_UseYourOwnFunctions_Imperative {
     }
 
 
+    public static void main(String[] args) {
+        String url = StreamingTweetFilterTemplate.class.getResource("/many_tweets.json").toExternalForm();
+        long current = System.currentTimeMillis();
+        List<Tweet> collected = new Java8TweetFilter().filterTweets(url);
+        System.out.printf("Time elapsed: %s ms\n", (System.currentTimeMillis() - current));
+    }
+
     static class Java8TweetFilter extends StreamingTweetFilterTemplate {
         public static final String JAVA_8_REGEXP = ".*[Jj][Aa][Vv][Aa][\\s]?8.*";
 
@@ -49,29 +56,6 @@ public class f_UseYourOwnFunctions_Imperative {
             return !tweet.isRetweet();
         }
     }
-
-
-    public static void main(String[] args) {
-        String url = StreamingTweetFilterTemplate.class.getResource("/tweets.json").toExternalForm();
-        long current = System.currentTimeMillis();
-        List<Tweet> collected = new Java8TweetFilter().filterTweets(url);
-        System.out.printf("Time elapsed: %s ms\n", (System.currentTimeMillis() - current));
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public static <T> T measure(Supplier<T> code) {
