@@ -1,5 +1,7 @@
 package org.livecoding.solution;
 
+import org.livecoding.domain.Person;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -39,6 +41,22 @@ public class c_Collections_Final {
                 .sorted()
                 .boxed()
                 .collect(Collectors.toList());
+
+        IntStream.rangeClosed(1, 5).forEach(o -> System.out.println(o));
+
+        //filter, map
+        List<String> filter = Arrays.asList(4, 3, 2, 1).stream()
+                .filter(i -> i % 2 == 0)
+                .map(i -> i.toString())
+                .collect(Collectors.toList());
+
+
+        List<String> collect = Arrays.asList(new Person("Jack", 20), new Person("Benjamin", 5), new Person("Bill", 35)).stream()
+                .filter(p -> p.getAge() >= 18)
+                .map(p -> p.getName())
+                .sorted()
+                .collect(Collectors.toList());
+        System.out.println(collect);
 
         //filter, map
         //show error messages: Integer::toString -> is ambigous
@@ -87,5 +105,27 @@ public class c_Collections_Final {
 
         Map<Integer, Integer> gb2 = gb1.entrySet().stream()
                 .collect(Collectors.toMap(k -> k.getKey(), v -> v.getValue().size()));
+    }
+
+    static class Person {
+
+        String name;
+        int age;
+        public Person(String name, int age) {
+            this.age = age;
+            this.name = name;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String toString() {
+            return String.format("Person[name=%s, age=%s]", name, age);
+        }
     }
 }
