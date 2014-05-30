@@ -1,16 +1,16 @@
 package org.livecoding;
 
+
 import java.util.*;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import static org.junit.Assert.*;
 
 /**
- * file:///Users/urs/Documents/jdk-8-ea-docs-b99-all-17_jul_2013/docs/api/index.html?java/util/Collection.html
- * file:///Users/urs/Documents/jdk-8-ea-docs-b99-all-17_jul_2013/docs/api/index.html?java/util/stream/Stream.html
- * file:///Users/urs/Documents/jdk-8-ea-docs-b99-all-17_jul_2013/docs/api/index.html?java/util/stream/Collectors.html
+ *
  */
 public class c_Collections {
 
@@ -18,10 +18,48 @@ public class c_Collections {
         //Collections samples:
         //foreach
 
-        //filter
+        //filter, groupBy
 
         //max
+    }
 
-        //groupBy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    static class Person {
+
+        String name;
+        int age;
+
+        public Person(String name, int age) {
+            this.age = age;
+            this.name = name;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String toString() {
+            return String.format("Person[name=%s, age=%s]", name, age);
+        }
     }
 }
+
+
+
