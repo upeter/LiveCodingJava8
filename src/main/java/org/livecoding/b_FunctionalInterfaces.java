@@ -1,5 +1,12 @@
 package org.livecoding;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
 /**
  * file:///Users/urs/Documents/jdk-8-ea-docs-b99-all-17_jul_2013/docs/api/index.html?java/util/function/Function.html
  */
