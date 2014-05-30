@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
@@ -19,14 +20,14 @@ public class f_UseYourOwnFunctions_Final {
 
     static class StreamingTweetFilter {
 
-        public static List<Tweet> processTweets(String searchQuery, Predicate<Tweet> doFilterTweet) {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(searchQuery).openStream()))) {
+        public static List<Tweet> processTweets(String path, Predicate<Tweet> doFilterTweet) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(path).openStream()))) {
                 return br.lines()
                         .parallel()
                         .map(Tweet::new)
                         .filter(doFilterTweet)
                         .collect(Collectors.toList());
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
