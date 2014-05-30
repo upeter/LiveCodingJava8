@@ -9,50 +9,39 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.*;
+import java.util.stream.Collectors;
 
 public class f_UseYourOwnFunctions {
     public static final String JAVA_8_REGEXP = ".*[Jj][Aa][Vv][Aa][\\s]?8.*";
 
     public static void main(String[] args) {
-        String url = StreamingTweetFilter.class.getResource("/tweets.json").toExternalForm();
+        String url = StreamingTweetFilter.class.getResource("/many_tweets.json").toExternalForm();
+
     }
 
     abstract static class StreamingTweetFilter {
 
-        public List<Tweet> filterTweets(String searchQuery) {
-            List<Tweet> collected = new ArrayList<>();
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(searchQuery).openStream()))) {
-                String json = "";
-                while ((json = br.readLine())!= null) {
-                    Tweet tweet = new Tweet(json);
-                    //do something specific with the tweet in doFilterTweet(...)
-                    if (doFilterTweet(tweet)) {
-                        collected.add(tweet);
-                    }
-                }
+        public List<Tweet> filterTweets(String url, Predicate<Tweet> tweetFilter) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()))) {
+                return br.lines()
+                        .parallel()
+                        .map(Tweet::new)
+                        .filter(tweetFilter)
+                        .collect(Collectors.toList());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            return collected;
         }
-
-
-        abstract boolean doFilterTweet(Tweet tweet);
-
     }
 
 
-    static class Java8TweetFilter {
+    static class Java8TweetFilter extends StreamingTweetFilter{
 
-        protected static boolean doFilterTweet(Tweet tweet) {
+        protected boolean doFilterTweet(Tweet tweet) {
             return tweet.getMessage().matches(JAVA_8_REGEXP);
 
         }
     }
-
-
-
-
 
 
 
