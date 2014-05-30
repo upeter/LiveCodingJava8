@@ -21,9 +21,9 @@ public class f_UseYourOwnFunctions {
 
     abstract static class StreamingTweetFilter {
 
-        public List<Tweet> filterTweets(String searchQuery) {
+        public List<Tweet> filterTweets(String url) {
             List<Tweet> collected = new ArrayList<>();
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(searchQuery).openStream()))) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()))) {
                 String json = "";
                 while ((json = br.readLine()) != null) {
                     Tweet tweet = new Tweet(json);
